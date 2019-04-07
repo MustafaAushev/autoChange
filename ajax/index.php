@@ -439,12 +439,7 @@ function saveDate()
     goStadia(6, $autoId);
 }
 
-function xlsx($id) {
-    $auto = getAutoById($id);
-    $client = getClientById($auto["clientId"]);
-    excelExport($auto, $client);
-    return true;
-}
+
 switch ($_REQUEST["type"])
 {
     case "goStadia": goStadia($_REQUEST["stadia"],$_REQUEST["autoId"]);break;
