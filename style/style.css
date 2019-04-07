@@ -7,7 +7,10 @@
 header {
     background: rgb(72, 233, 72);
 }
-
+.mar {
+    margin: 5px;
+    padding: 5px;
+}
 .panel-heading {
     position: relative;
     height: 60px;
@@ -29,6 +32,15 @@ header {
 }
 .flright {
     float: right; 
+}
+.icon {
+    position: relative;
+}
+.icon:hover::after { 
+    content: attr(data-title); 
+    z-index: 1;
+    position: absolute;
+    background: rgb(254, 255, 248);
 }
 
 .flleft {
@@ -217,4 +229,8 @@ input[type="text"] {
 
  input:hover {
     background: #73f77a !important; 
+ }
+
+ .iconRed {
+     background-image: url('../icon/red.svg');
  }
