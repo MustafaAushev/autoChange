@@ -34,8 +34,6 @@ if (isAdmin()&&isManagerDoc()&&isManagerAuto())
 else
 {
 echo "
-
-
 <body>
     <header>
         <div class='caption'>";

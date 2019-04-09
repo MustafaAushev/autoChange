@@ -2,17 +2,26 @@
 
 function getAutoById($id) {
     global $conn;
+    if (!$id) {
+        echo "Отсутсвует id";
+        exit;
+    }
     $Sql = "SELECT * FROM auto WHERE id=$id";
+    echo $Sql;
     $result=mysql_query($Sql,$conn); 
-    $row = mysql_fetch_array($result); 
+    $row = mysql_fetch_assoc($result); 	
     return $row;
 }
 
 function getClientById($id) {
     global $conn;
+    if (!$id) {
+        echo "Отсутсвует id";
+        exit;
+    }
     $Sql = "SELECT * FROM client WHERE id=$id";
     $result=mysql_query($Sql,$conn); 
-    $row = mysql_fetch_array($result);
+    $row = mysql_fetch_assoc($result); 	
     return $row;
 }
 

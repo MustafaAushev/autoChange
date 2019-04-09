@@ -2,8 +2,6 @@
 session_start();
 require_once("../db/db.php");
 require_once("../lib/func.php");
-require_once("../xlsx/index.php");
-require_once("../class/PHPExcel.php");
 
 function docOfStadia($stadia,&$item,&$rusitem,&$nameStadia)    //Достаем документы за указанную стадию
 {
@@ -439,9 +437,7 @@ function saveDate()
     goStadia(6, $autoId);
 }
 
-
-switch ($_REQUEST["type"])
-{
+switch ($_REQUEST["type"]) {
     case "goStadia": goStadia($_REQUEST["stadia"],$_REQUEST["autoId"]);break;
     case "comeOn": comeOn($_REQUEST["doc"],$_REQUEST["autoId"],$_REQUEST["stadia"],1); break;
     case "otkat": comeOn($_REQUEST["doc"],$_REQUEST["autoId"],$_REQUEST["stadia"],0); break;
@@ -455,7 +451,6 @@ switch ($_REQUEST["type"])
     case "full": full($_REQUEST["id"], $_REQUEST["typeChange"]); break;
     case "changeData": changeData(); break;
     case "dateSave": saveDate(); break;
-    case "xlsx": xlsx($_POST["auto"]); break;
 }
 
 ?>
