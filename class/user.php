@@ -31,6 +31,7 @@ class User {
     public function out() {
         unset($_SESSION["ID"]);
         unset($_SESSION["login"]);
+        unset($_SESSION["name"]);
     }
 }
 

@@ -7,7 +7,6 @@ function getAutoById($id) {
         exit;
     }
     $Sql = "SELECT * FROM auto WHERE id=$id";
-    echo $Sql;
     $result=mysql_query($Sql,$conn); 
     $row = mysql_fetch_assoc($result); 	
     return $row;
@@ -193,7 +192,8 @@ function dataAuto($readonly, $arr = array()) {
         "massa" => "",
         "pts" => "",
         "sts" => "",
-        "change" => ""
+        "change" => "",
+        "comment" => ""
     );
     if (count($arr) > 0)
         foreach ($row as $key=>$value) {
@@ -215,7 +215,8 @@ function dataAuto($readonly, $arr = array()) {
     <div>Масса: <input class='input' name='massa' type='text' value='".$row['massa']."' $readonly> </div>
     <div>ПТС: <input class='input' name='pts' type='text' value='".$row['pts']."' $readonly> </div>
     <div>СТС: <input class='input' name='sts' type='text' value='".$row['sts']."' $readonly> </div>
-    <div>Вносимые изменения: <input class='input' name='change' type='text' value='".$row['change']."' $readonly> </div>";
+    <div>Вносимые изменения: <input class='input' name='change' type='text' value='".$row['change']."' $readonly> </div>
+    <div>Коментарий: <input class='input' name='comment' type='text' value='".$row['comment']."' $readonly> </div>";
 }
 
 function dataClient($readonly, $arr = array()) {

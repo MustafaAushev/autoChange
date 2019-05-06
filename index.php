@@ -3,6 +3,8 @@ session_start();
 require_once("lib/func.php");
 require_once("db/db.php");
 require_once("class/user.php");
+$user = new User($_POST["login"], $_POST["password"]);
+$auth = $user->auth();
 if(isset($_GET['action'])) out();
 ?>
 <!Doctype-html>
@@ -23,7 +25,6 @@ if(isset($_GET['action'])) out();
     </header>
     <div class='body' id='body'>
         <?php
-        $user = new User($_POST["login"], $_POST["password"]);
         $ret="<table class='center'><tr><td ><div class='bigtext centertext'>".
         $_SESSION['name'].", Вы авторизованы!<div><form  class='form-selector' action='index.php' method='GET'>
         <div><input type='submit' name='action' value='Выход'> </div> 
@@ -33,7 +34,7 @@ if(isset($_GET['action'])) out();
         if(isset($_GET['action'])) echo form();
         else if (login()) echo $ret;
         else if(isset($_POST['login'])) {
-                if ($user->auth()) 
+                if ($auth)
                     echo "<table class='center'><tr><td ><div class='bigtext centertext'>".
                     $_SESSION['login'].", Вы авторизованы!<div><form  class='form-selector' action='index.php' method='GET'>
                     <div><input type='submit' name='action' value='Выход'> </div> 

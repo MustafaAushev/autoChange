@@ -120,7 +120,9 @@ function goStadia($stadia,$autoId)  //В раздел управления ст�
             $success="";
             $flag=0;
             $temp .= "<form id='dateForm'>
-            <input id='inputDate' name='date' class='input' type='date'><div class='info' car='$autoId' id='newDate'> OK</div>
+            <div class='info'>Введите дату сдачи</div>
+            <input id='inputDate' name='date' class='input' type='date'>
+            <div class='info btn' car='$autoId' id='newDate'> OK</div>
             </form>";
 
         }
