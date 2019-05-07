@@ -5,7 +5,7 @@
 function formEmpty(className) {  //Проверка всех input на пустоту
     array = $('.' + className); //получаем массив из полей которые надо проверить
     for (let i = 0; i < array.length; i++) {
-        if (!(array[i].value)) {
+        if ((array[i].name !== 'comment') && !(array[i].value)) {
             return true;
         }
     }
@@ -13,13 +13,19 @@ function formEmpty(className) {  //Проверка всех input на пуст
 }
 
 
-$(document).on('click', '#back', function(e) {
+$(document).on('click', '#back', function() {  //Возврат авто на предыдущую стадию
     const autoId = $(this).attr('car');
     const stadia = $(this).attr('stadia');
+    const comment = $('.input');
+    alert(comment);
+    if (!comment[0].value) {
+        alert('Заполните поле комментария');
+        return false;
+    }
     $.ajax({
         type: 'POST',
         url: '../ajax/index.php',
-        data: 'type=back&autoId=' + autoId + '&stadia=' + stadia,
+        data: 'type=back&comment=' + comment[0].value + '&autoId=' + autoId + '&stadia=' + stadia,
         success: function(ret) {
             $('.body').html(ret);
         }
@@ -40,11 +46,11 @@ $(document).on('click', '#vozvrat', function() {
 });
 
 $(document).on('click', '#saveNewClient', function() {  // Обработчик события при нажатия кнопки сохранения клиента
-    const str = $('#newClientData').serialize();
     if (formEmpty('input')) {
         alert('Заполните все поля!!!');
         return false;
     }
+    const str = $('#newClientData').serialize();
     $.ajax({
         type: 'POST',
         url: './ajax/index.php',
@@ -240,7 +246,13 @@ $(document).on('click', '.iconFull', function() {   //Полная инфа по
 $(document).on('click', '#changeData', function() {        // Снять атрибут readonly и disabled со всех Input на странице
     $('input').removeAttr('readonly');
     $('select').removeAttr('disabled');
-    $('.body').append("<div class='flleft info btn' id=save >Сохранить</div>");
+    $('#fieldSave').html("<div class='flleft info btn' id=save >Сохранить</div><div class='flleft info btn' id='cancel'>Отмена</div>");
+});
+
+$(document).on('click', '#cancel', function() {
+    $('#fieldSave').html("");
+    $('input').attr('readonly', 'true');
+    $('select').prop('disabled', true);
 });
 
 $(document).on('click', '#save', function() {  //Сохранить внесенные изменения по авто или клиенту

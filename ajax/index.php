@@ -84,24 +84,23 @@ function goStadia($stadia,$autoId)  //В раздел управления ст�
     $rusitem;
     $nameStadia;
     if (!docOfStadia($stadia,$item,$rusitem,$nameStadia))
-    {
         echo "<div class='info>Не удалось получить документы по указанной стадии</div>";
-    }
     $arr=sostOfDoc($item,$autoId);
     $Sql="SELECT * FROM auto where id=".$autoId;
     $result=mysql_query($Sql,$conn);
-    while ($row=mysql_fetch_array($result))
-    {
-        
+    while ($row=mysql_fetch_array($result)) {
         $temp="<div id='autoInfo' car='$autoId' stadia='$stadia' class='info bigtext'>Автомобиль ".$row["model"].". Гос.номер: ".$row["number"]." на ".$stadia." стадии ($nameStadia).</div>";
+        $comment = $row['comment'];
     }
     $flag=1;
     $not="";
     $action="comeOn";
     $success="(ГОТОВО)";
+    $temp .= "<div id='changeData' class='info btn'>Добавить комментарий:</div> <input class='input' name='comment' type='text' value='$comment' readonly >";
     if ($stadia>1)
     {
-        $temp.="<div class='info btn backStadiabtn' id='back' car='$autoId' stadia='$stadia' >Вернуть на предыдущую стадию</div><br>";
+        $temp.="
+        <div class='info btn backStadiabtn' id='back' car='$autoId' stadia='$stadia' >Вернуть на предыдущую стадию</div><br>";
     }
     if ($stadia==6)
     {
@@ -205,9 +204,17 @@ function comeOn($doc,$autoId,$stadia,$change)
 
 }
 
-function nextS($autoId,$stadia)   //На след стадию
+function nextS($autoId, $stadia, $comment = null)   //На след стадию
 {
     global $conn;
+    if ($comment !== null) {
+        $Sql = "UPDATE auto SET comment='$comment' WHERE id=$autoId";
+        $result=mysql_query($Sql, $conn);
+        if (!$result) {
+            echo "<div class='info' > Не удалось сохранить комментарий</div>";
+            return false;
+        }
+    }
     if ( ($stadia == 101) || ($stadia == 102) || ($stadia == 6))
     {
         if ($stadia == 6) $stadia++;
@@ -374,7 +381,7 @@ function full($id, $type)   //Полная инфа по авто или кли�
         echo "</form>";
     }
     
-    echo "<div class='btn info flleft' id='changeData'>Изменить</div>";
+    echo "<div class='btn info flleft' id='changeData'>Изменить</div> <div id='fieldSave'></div>";
 }
 
 function changeData() //Изменение данных по авто или по клиенту
@@ -444,7 +451,7 @@ switch ($_REQUEST["type"]) {
     case "comeOn": comeOn($_REQUEST["doc"],$_REQUEST["autoId"],$_REQUEST["stadia"],1); break;
     case "otkat": comeOn($_REQUEST["doc"],$_REQUEST["autoId"],$_REQUEST["stadia"],0); break;
     case "nextS": nextS($_REQUEST["autoId"],$_REQUEST["stadia"]); break;
-    case "back": nextS($_REQUEST["autoId"],$_REQUEST["stadia"]-2); break;
+    case "back": nextS($_REQUEST["autoId"],$_REQUEST["stadia"]-2, $_REQUEST["comment"]); break;
     case "arhiv": nextS($_REQUEST["autoId"],8); break;
     case "saveNewClient": saveClient();break;
     case "saveNewAuto": saveAuto(); break;
