@@ -17,7 +17,6 @@ $(document).on('click', '#back', function() {  //Возврат авто на п
     const autoId = $(this).attr('car');
     const stadia = $(this).attr('stadia');
     const comment = $('.input');
-    alert(comment);
     if (!comment[0].value) {
         alert('Заполните поле комментария');
         return false;
